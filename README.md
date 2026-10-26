@@ -20,7 +20,7 @@ Discodo Launcher is an open-source desktop library for finding PC games, saving 
 - **Dark desktop UI** — search, popular/installed filters, details, favorites, and a game-folder shortcut.
 - **Saved settings** — executable paths, language, and favorites persist locally.
 - **Offline cache** — the last catalog remains available if Steam cannot be reached.
-- **Five interface languages** — English, Russian, Polish, German, and Ukrainian.
+- **15 interface languages** — English, Russian, German, French, Spanish, Italian, Chinese, Japanese, Korean, Brazilian Portuguese, Polish, Turkish, Kazakh, Czech, and Ukrainian.
 - **Python tests and cross-platform CI**.
 
 > Steam's public endpoint lists Steam apps, not only games; it can include tools, demos, soundtracks, and other app types. Discord Rich Presence and Steam shortcut writing are not implemented. Discodo launches the real executable selected by the user and does not spoof another game's identity or bypass Discord Quests.

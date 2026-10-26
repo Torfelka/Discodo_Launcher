@@ -42,21 +42,22 @@ impl DiscodoApp {
             .add_filter("Executable", &["exe", "bat", "sh", "app"])
             .pick_file();
         if let Some(path) = chosen {
-            if let Some(game) = self.selected_game() {
-                self.executable_paths.insert(game.id.clone(), path.clone());
+            if let Some(game_id) = self.selected_game().map(|game| game.id.clone()) {
+                self.executable_paths.insert(game_id, path.clone());
                 self.status = format!("Executable set: {}", path.display());
             }
         }
     }
 
     fn launch_selected(&mut self) {
-        let Some(game) = self.selected_game() else { return };
-        let Some(path) = self.executable_paths.get(&game.id).cloned() else {
+        let Some((game_id, game_name)) = self.selected_game()
+            .map(|game| (game.id.clone(), game.name.clone())) else { return };
+        let Some(path) = self.executable_paths.get(&game_id).cloned() else {
             self.status = "Select the game's actual executable first.".into();
             return;
         };
         match launcher::launch_executable(&path) {
-            Ok(_) => self.status = format!("Launched {}.", game.name),
+            Ok(_) => self.status = format!("Launched {}.", game_name),
             Err(error) => self.status = format!("Launch failed: {error:#}"),
         }
     }

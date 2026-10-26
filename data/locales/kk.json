@@ -1,0 +1,15 @@
+{
+  "app_name": "Discodo_Launcher",
+  "library": "Кітапхана",
+  "search": "Ойындарды іздеу…",
+  "choose_exe": "EXE таңдау…",
+  "play": "Ойнау",
+  "game_executable": "Ойынның орындалатын файлы",
+  "integrations": "Интеграциялар",
+  "discord_presence": "Discord күйі",
+  "steam_shortcuts": "Steam таңбашалары",
+  "not_selected": "Орындалатын файл таңдалмаған",
+  "choose_executable_first": "Алдымен ойынның нақты орындалатын файлын таңдаңыз.",
+  "launched": "Ойын іске қосылды.",
+  "launch_failed": "Ойынды іске қосу мүмкін болмады."
+}

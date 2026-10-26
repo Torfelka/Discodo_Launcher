@@ -1,0 +1,15 @@
+{
+  "app_name": "Discodo_Launcher",
+  "library": "Knihovna",
+  "search": "Hledat hry…",
+  "choose_exe": "Vybrat EXE…",
+  "play": "Hrát",
+  "game_executable": "Spustitelný soubor hry",
+  "integrations": "Integrace",
+  "discord_presence": "Stav Discordu",
+  "steam_shortcuts": "Zástupci Steam",
+  "not_selected": "Není vybrán spustitelný soubor",
+  "choose_executable_first": "Nejprve vyberte skutečný spustitelný soubor hry.",
+  "launched": "Hra byla spuštěna.",
+  "launch_failed": "Hru se nepodařilo spustit."
+}

@@ -2,6 +2,9 @@ import json, urllib.request
 from dataclasses import dataclass
 from pathlib import Path
 STEAM_APP_LIST_URL="https://api.steampowered.com/ISteamApps/GetAppList/v2/"
+STEAMSPY_TOP_URL="https://steamspy.com/api.php?request=top1000games"
+MIN_CATALOG_SIZE=50000
+FEATURED_LIMIT=500
 @dataclass(slots=True)
 class Game:
  app_id:str
@@ -85,6 +88,31 @@ class Catalog:
   for x in payload.get("applist",{}).get("apps",[]):
    name=str(x.get("name","")).strip(); aid=x.get("appid")
    if name and aid is not None:unique[str(aid)]=name
-  if len(unique)<5000:raise RuntimeError(f"Steam returned only {len(unique)} entries; expected at least 5,000.")
+  if len(unique)<MIN_CATALOG_SIZE:raise RuntimeError(f"Steam returned {len(unique):,} entries; expected at least {MIN_CATALOG_SIZE:,}.")
   data=[{"appid":k,"name":v} for k,v in unique.items()]; self.cache_path.parent.mkdir(parents=True,exist_ok=True); tmp=self.cache_path.with_suffix(".tmp"); tmp.write_text(json.dumps(data,ensure_ascii=False,separators=(",",":")),encoding="utf-8"); tmp.replace(self.cache_path)
   return [Game(k,v,k in POPULAR_GAMES) for k,v in unique.items()]
+ def fetch_featured_games(self):
+  """Fetch the most-owned SteamSpy titles and cache 500 featured entries."""
+  cache=self.cache_path.with_name("steam_featured.json")
+  req=urllib.request.Request(STEAMSPY_TOP_URL,headers={"User-Agent":"DiscodoLauncher/1.0"})
+  try:
+   with urllib.request.urlopen(req,timeout=25) as r:payload=json.loads(r.read().decode("utf-8"))
+   rows=[]
+   if isinstance(payload,dict):
+    for aid,row in payload.items():
+     if not isinstance(row,dict):continue
+     name=str(row.get("name","")).strip()
+     if name and str(aid).isdigit():
+      rows.append({"appid":str(aid),"name":name,"genre":"Popular Steam game","description":f"{name} — featured Steam title."})
+   rows.sort(key=lambda x:int(x["appid"]))
+   rows=rows[:FEATURED_LIMIT]
+   if len(rows)<400:raise RuntimeError(f"SteamSpy returned only {len(rows)} usable games.")
+   cache.parent.mkdir(parents=True,exist_ok=True)
+   tmp=cache.with_suffix(".tmp");tmp.write_text(json.dumps(rows,ensure_ascii=False,separators=(",",":")),encoding="utf-8");tmp.replace(cache)
+   return {x["appid"]:{"name":x["name"],"genre":x["genre"],"description":x["description"]} for x in rows}
+  except Exception:
+   try:
+    rows=json.loads(cache.read_text(encoding="utf-8"))
+    return {str(x["appid"]):{"name":str(x["name"]),"genre":str(x.get("genre","Popular Steam game")),"description":str(x.get("description","Featured Steam title."))} for x in rows[:FEATURED_LIMIT]}
+   except (OSError,ValueError,TypeError,KeyError):
+    return {k:v for k,v in POPULAR_GAMES.items()}

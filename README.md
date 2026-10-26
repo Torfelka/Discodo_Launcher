@@ -7,6 +7,7 @@
 Search your collection, choose each game's executable, and launch it from one clean interface.
 
 [![Rust](https://img.shields.io/badge/Rust-2024_edition-b7410e?logo=rust&logoColor=white)](https://www.rust-lang.org/)
+[![CI](https://github.com/Torfelka/Discodo_Launcher/actions/workflows/ci.yml/badge.svg)](https://github.com/Torfelka/Discodo_Launcher/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-6c75d9)](#requirements)
 [![Games](https://img.shields.io/badge/Game_catalog-50-2c9b72)](data/games.json)

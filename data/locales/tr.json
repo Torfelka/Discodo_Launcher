@@ -1,0 +1,15 @@
+{
+  "app_name": "Discodo_Launcher",
+  "library": "Kütüphane",
+  "search": "Oyun ara…",
+  "choose_exe": "EXE seç…",
+  "play": "Oyna",
+  "game_executable": "Oyun çalıştırılabilir dosyası",
+  "integrations": "Entegrasyonlar",
+  "discord_presence": "Discord Durumu",
+  "steam_shortcuts": "Steam kısayolları",
+  "not_selected": "Çalıştırılabilir dosya seçilmedi",
+  "choose_executable_first": "Önce oyunun gerçek çalıştırılabilir dosyasını seçin.",
+  "launched": "Oyun başlatıldı.",
+  "launch_failed": "Oyun başlatılamadı."
+}

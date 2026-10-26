@@ -2,7 +2,7 @@
 
 <div align="center">
 
-**Python desktop launcher · searchable library with 5,000+ Steam entries**
+**Python desktop launcher · searchable library with 50,000+ Steam entries**
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776ab?logo=python&logoColor=white)](https://python.org)
 [![CI](https://github.com/Torfelka/Discodo_Launcher/actions/workflows/ci.yml/badge.svg)](https://github.com/Torfelka/Discodo_Launcher/actions/workflows/ci.yml)
@@ -14,8 +14,8 @@
 Discodo Launcher is an open-source desktop library for finding PC games, saving each game's real executable, and launching it from one dark, searchable interface. It fetches Steam's public app catalog on first run and caches it locally, providing far more than 5,000 entries without bundling a huge static JSON file.
 
 ## Features
-- **Thousands of catalog entries** — Steam's public app list contains far more than 5,000 entries; no API key is required.
-- **Popular games with cover art** — curated featured titles have descriptions and on-demand Steam CDN covers.
+- **50,000+ catalog entries** — the app validates the Steam list has at least 50,000 entries; no API key is required.
+- **500 featured popular games with cover art** — the app uses SteamSpy's top-games ranking and downloads Steam CDN cover art on demand.
 - **No covers for the long tail** — less prominent entries remain lightweight text rows.
 - **Dark desktop UI** — search, popular/installed filters, details, favorites, and a game-folder shortcut.
 - **Saved settings** — executable paths, language, and favorites persist locally.
@@ -71,12 +71,12 @@ python3 app.py
 
 ### First launch
 1. The app opens and displays any cached catalog.
-2. Steam's public app list downloads in the background; the counter updates when ready.
+2. Steam's public app list (at least 50,000 entries) and SteamSpy's featured-game list download in the background; the counter updates when ready.
 3. Search by title or App ID. **Popular** shows featured titles; **Installed** shows entries with a saved executable path.
 4. Select a title, click **Browse…**, and choose its actual installed executable.
 5. Click **PLAY GAME**. The path is saved for next time.
 
-Featured covers download only when a featured game is selected and are cached locally. Other catalog entries intentionally have no cover.
+Covers for up to 500 featured games download only when selected and are cached locally. Other catalog entries intentionally have no cover. The lightweight Demo Mode opens a small preview window only; it does not claim a game is running.
 
 ## Data and privacy
 - Catalog: Steam public endpoint `ISteamApps/GetAppList/v2/`.
@@ -105,8 +105,9 @@ Discodo_Launcher/
 
 ## Roadmap
 - [x] Replace Rust with Python
-- [x] Searchable 5,000+ Steam app catalog and local cache
-- [x] Featured games with on-demand cover art
+- [x] Searchable 50,000+ Steam app catalog and local cache
+- [x] 500 SteamSpy-ranked featured games with on-demand cover art
+- [x] Lightweight demo window for UI testing
 - [x] Persist paths, favorites, and language
 - [x] Python CI and unit tests
 - [ ] Detect installed Steam games automatically

@@ -1,0 +1,15 @@
+{
+  "app_name": "Discodo_Launcher",
+  "library": "Библиотека",
+  "search": "Поиск игр...",
+  "choose_exe": "Выбрать EXE…",
+  "play": "Запустить",
+  "game_executable": "Исполняемый файл игры",
+  "integrations": "Интеграции",
+  "discord_presence": "Статус Discord",
+  "steam_shortcuts": "Ярлыки Steam",
+  "not_selected": "Файл не выбран",
+  "choose_executable_first": "Сначала выберите настоящий EXE игры.",
+  "launched": "Игра запущена.",
+  "launch_failed": "Не удалось запустить игру."
+}

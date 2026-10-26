@@ -16,7 +16,7 @@ fn main() -> eframe::Result<()> {
         options,
         Box::new(|cc| {
             let mut visuals = egui::Visuals::dark();
-            visuals.window_rounding = egui::Rounding::same(12.0);
+            visuals.window_rounding = egui::CornerRadius::same(12);
             visuals.panel_fill = egui::Color32::from_rgb(16, 18, 25);
             cc.egui_ctx.set_visuals(visuals);
             Ok(Box::new(app::DiscodoApp::new()))

@@ -1,0 +1,15 @@
+{
+  "app_name": "Discodo_Launcher",
+  "library": "游戏库",
+  "search": "搜索游戏…",
+  "choose_exe": "选择 EXE…",
+  "play": "开始游戏",
+  "game_executable": "游戏可执行文件",
+  "integrations": "集成",
+  "discord_presence": "Discord 状态",
+  "steam_shortcuts": "Steam 快捷方式",
+  "not_selected": "未选择可执行文件",
+  "choose_executable_first": "请先选择游戏的实际可执行文件。",
+  "launched": "游戏已启动。",
+  "launch_failed": "启动失败。"
+}

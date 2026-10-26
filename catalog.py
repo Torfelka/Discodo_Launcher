@@ -104,7 +104,6 @@ class Catalog:
      name=str(row.get("name","")).strip()
      if name and str(aid).isdigit():
       rows.append({"appid":str(aid),"name":name,"genre":"Popular Steam game","description":f"{name} — featured Steam title."})
-   rows.sort(key=lambda x:int(x["appid"]))
    rows=rows[:FEATURED_LIMIT]
    if len(rows)<400:raise RuntimeError(f"SteamSpy returned only {len(rows)} usable games.")
    cache.parent.mkdir(parents=True,exist_ok=True)

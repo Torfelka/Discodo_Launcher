@@ -1,7 +1,8 @@
 import json,tempfile,unittest
 from pathlib import Path
-from catalog import Catalog,POPULAR_GAMES
+from catalog import Catalog,POPULAR_GAMES,MIN_CATALOG_SIZE,FEATURED_LIMIT
 class CatalogTests(unittest.TestCase):
+ def test_catalog_target_is_at_least_50000(self):self.assertEqual(MIN_CATALOG_SIZE,50000);self.assertEqual(FEATURED_LIMIT,500)
  def test_featured_ids_are_unique(self):self.assertGreaterEqual(len(POPULAR_GAMES),40);self.assertEqual(len(POPULAR_GAMES),len(set(POPULAR_GAMES)))
  def test_cache_reads_more_than_5000(self):
   with tempfile.TemporaryDirectory() as d:

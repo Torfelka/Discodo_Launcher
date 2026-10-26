@@ -1,0 +1,15 @@
+{
+  "app_name": "Discodo_Launcher",
+  "library": "Library",
+  "search": "Search games...",
+  "choose_exe": "Choose EXE…",
+  "play": "Play",
+  "game_executable": "Game executable",
+  "integrations": "Integrations",
+  "discord_presence": "Discord Rich Presence",
+  "steam_shortcuts": "Steam shortcuts",
+  "not_selected": "No executable selected",
+  "choose_executable_first": "Select the game's actual executable first.",
+  "launched": "Game launched.",
+  "launch_failed": "Launch failed."
+}

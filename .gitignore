@@ -1,5 +1,8 @@
-/target
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
 .DS_Store
-*.log
-.idea/
-.vscode/
+Thumbs.db
+.cache/

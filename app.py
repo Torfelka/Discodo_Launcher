@@ -56,7 +56,7 @@ class App(tk.Tk):
   main=tk.Frame(body,bg=BG,padx=22,pady=8); main.pack(side="left",fill="both",expand=True); tk.Label(main,text=self.t("description"),bg=BG,fg=MUTED).pack(anchor="w"); self.title_label=tk.Label(main,text=self.t("select"),bg=BG,fg=FG,font=("Segoe UI Semibold",26),wraplength=700,justify="left"); self.title_label.pack(anchor="w",pady=(9,2)); self.subtitle=tk.Label(main,text="",bg=BG,fg=MUTED); self.subtitle.pack(anchor="w")
   card=tk.Frame(main,bg=PANEL,padx=16,pady=16); card.pack(fill="x",pady=(22,16)); self.cover=tk.Label(card,text="DISCODO",width=20,height=12,bg=PANEL3,fg=MUTED,font=("Segoe UI Semibold",11)); self.cover.pack(side="left",anchor="n",padx=(0,18)); d=tk.Frame(card,bg=PANEL); d.pack(side="left",fill="both",expand=True); tk.Label(d,text="GAME DETAILS",bg=PANEL,fg=MUTED,font=("Segoe UI Semibold",9)).pack(anchor="w"); self.desc=tk.Label(d,text="",bg=PANEL,fg=FG,font=("Segoe UI",11),justify="left",anchor="nw",wraplength=500); self.desc.pack(fill="x",anchor="w",pady=(12,18)); self.appid=tk.Label(d,text="",bg=PANEL,fg=MUTED,font=("Consolas",10)); self.appid.pack(anchor="w"); self.covernote=tk.Label(d,text="",bg=PANEL,fg=MUTED,font=("Segoe UI",9)); self.covernote.pack(anchor="w",pady=(8,0))
   tk.Label(main,text=self.t("path"),bg=BG,fg=MUTED,font=("Segoe UI Semibold",10)).pack(anchor="w",pady=(6,8)); row=tk.Frame(main,bg=BG); row.pack(fill="x"); self.pathvar=tk.StringVar(value=self.t("none")); tk.Entry(row,textvariable=self.pathvar,bg=PANEL2,fg=FG,relief="flat",state="readonly",readonlybackground=PANEL2).pack(side="left",fill="x",expand=True,ipady=9); ttk.Button(row,text=self.t("browse"),command=self.browse).pack(side="left",padx=(8,0))
-  a=tk.Frame(main,bg=BG); a.pack(fill="x",pady=(14,0)); self.playbtn=ttk.Button(a,text=self.t("play"),style="Accent.TButton",command=self.play); self.playbtn.pack(side="left"); ttk.Button(a,text=self.t("steam"),command=self.open_steam).pack(side="left",padx=8); ttk.Button(a,text=self.t("favorite"),command=self.favorite).pack(side="left"); ttk.Button(a,text=self.t("folder"),command=self.open_folder).pack(side="left",padx=8); tk.Label(self,textvariable=self.status,bg=PANEL,fg=MUTED,anchor="w",padx=17,pady=10,font=("Segoe UI",9)).pack(fill="x",side="bottom")
+  a=tk.Frame(main,bg=BG); a.pack(fill="x",pady=(14,0)); self.playbtn=ttk.Button(a,text=self.t("play"),style="Accent.TButton",command=self.play); self.playbtn.pack(side="left"); ttk.Button(a,text=self.t("steam"),command=self.open_steam).pack(side="left",padx=8); ttk.Button(a,text=self.t("favorite"),command=self.favorite).pack(side="left"); ttk.Button(a,text=self.t("folder"),command=self.open_folder).pack(side="left",padx=8); ttk.Button(a,text="OPEN DEMO WINDOW",command=self.open_demo).pack(side="left",padx=8); tk.Label(self,textvariable=self.status,bg=PANEL,fg=MUTED,anchor="w",padx=17,pady=10,font=("Segoe UI",9)).pack(fill="x",side="bottom")
  def change_lang(self,_=None):
   self.lang=LANGS.get(self.langbox.get(),"en")
   self.settings["language"]=self.lang
@@ -70,13 +70,19 @@ class App(tk.Tk):
   for aid,x in POPULAR_GAMES.items():d[aid]=type("GameEntry",(),{"app_id":aid,"name":x["name"],"popular":True,"genre":x["genre"],"description":x["description"]})()
   self.games=sorted(d.values(),key=lambda g:(not g.popular,g.name.casefold()))
  def fetch(self):
-  try:self.queue.put(("catalog",self.catalog.fetch_steam_catalog()))
+  try:
+   games=self.catalog.fetch_steam_catalog()
+   featured=self.catalog.fetch_featured_games()
+   self.queue.put(("catalog",(games,featured)))
   except Exception as e:self.queue.put(("error",str(e)))
  def poll(self):
   try:
    while True:
     kind,data=self.queue.get_nowait()
-    if kind=="catalog":self.games=data; self.merge_popular(); self.refresh(); self.count.config(text=f"{len(self.games):,} GAMES"); self.status.set(f"{len(self.games):,} {self.t('ready')}")
+    if kind=="catalog":
+     self.games,featured=data
+     POPULAR_GAMES.update(featured)
+     self.merge_popular(); self.refresh(); self.count.config(text=f"{len(self.games):,} ENTRIES · {len(featured):,} FEATURED"); self.status.set(f"{len(self.games):,} {self.t('ready')} · {len(featured):,} featured games")
     elif kind=="cover":
      if self.selected and self.selected.app_id==data:self.show_cover(self.selected)
     elif kind=="cover-missing":
@@ -145,6 +151,17 @@ class App(tk.Tk):
  def favorite(self):
   if not self.selected:return
   f=set(self.settings.get("favorites",[])); aid=self.selected.app_id; f.remove(aid) if aid in f else f.add(aid); self.settings["favorites"]=sorted(f); self.save(); self.refresh()
+ def open_demo(self):
+  win=tk.Toplevel(self)
+  win.title("Discodo · Demo Mode")
+  win.geometry("420x240")
+  win.resizable(False,False)
+  win.configure(bg=BG)
+  tk.Label(win,text="D",font=("Segoe UI Black",26),bg=ACCENT,fg="white",width=2,pady=2).pack(pady=(28,12))
+  tk.Label(win,text="Discodo Demo Mode",font=("Segoe UI Semibold",17),bg=BG,fg=FG).pack()
+  tk.Label(win,text="Lightweight preview window — no game is running.",font=("Segoe UI",10),bg=BG,fg=MUTED,wraplength=340).pack(pady=10)
+  tk.Label(win,text="This demo does not report a fake game to Steam or Discord.",font=("Segoe UI",9),bg=BG,fg="#d7b66b",wraplength=350).pack(pady=(0,15))
+  ttk.Button(win,text="Close demo",command=win.destroy).pack()
  def open_folder(self):
   if not self.selected:return
   p=self.settings.get("paths",{}).get(self.selected.app_id)

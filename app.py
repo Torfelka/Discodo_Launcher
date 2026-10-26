@@ -89,12 +89,22 @@ class App(tk.Tk):
   if p.exists() and Image:self.show_cover(g); return
   self.cover.config(image="",text="LOADING\nCOVER",width=20,height=12); self.cover.image=None; self.covernote.config(text=self.t("featured")); threading.Thread(target=self.download_cover,args=(g.app_id,),daemon=True).start()
  def download_cover(self,aid):
-  if not Image:return
-  try:
-   req=urllib.request.Request(f"https://cdn.akamai.steamstatic.com/steam/apps/{aid}/library_600x900.jpg",headers={"User-Agent":"DiscodoLauncher/1.0"})
-   with urllib.request.urlopen(req,timeout=12) as r:data=r.read()
-   im=Image.open(BytesIO(data)).convert("RGB"); im.thumbnail((190,270)); im.save(COVERS/f"{aid}.jpg","JPEG",quality=88); self.queue.put(("cover",aid))
-  except Exception:self.queue.put(("cover-missing",aid))
+  if not Image:
+   self.queue.put(("cover-missing",aid)); return
+  urls=[
+   f"https://cdn.akamai.steamstatic.com/steam/apps/{aid}/library_600x900.jpg",
+   f"https://cdn.akamai.steamstatic.com/steam/apps/{aid}/header.jpg",
+   f"https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/{aid}/header.jpg"]
+  for url in urls:
+   try:
+    req=urllib.request.Request(url,headers={"User-Agent":"DiscodoLauncher/1.0"})
+    with urllib.request.urlopen(req,timeout=10) as r:data=r.read()
+    im=Image.open(BytesIO(data)).convert("RGB")
+    if im.width<80 or im.height<50:continue
+    im.thumbnail((190,270)); im.save(COVERS/f"{aid}.jpg","JPEG",quality=88)
+    self.queue.put(("cover",aid)); return
+   except Exception:continue
+  self.queue.put(("cover-missing",aid))
  def show_cover(self,g):
   if not Image:return
   try:

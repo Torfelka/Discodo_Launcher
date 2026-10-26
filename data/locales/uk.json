@@ -1,0 +1,15 @@
+{
+  "app_name": "Discodo_Launcher",
+  "library": "Бібліотека",
+  "search": "Пошук ігор…",
+  "choose_exe": "Вибрати EXE…",
+  "play": "Грати",
+  "game_executable": "Виконуваний файл гри",
+  "integrations": "Інтеграції",
+  "discord_presence": "Статус Discord",
+  "steam_shortcuts": "Ярлики Steam",
+  "not_selected": "Виконуваний файл не вибрано",
+  "choose_executable_first": "Спочатку виберіть справжній виконуваний файл гри.",
+  "launched": "Гру запущено.",
+  "launch_failed": "Не вдалося запустити гру."
+}

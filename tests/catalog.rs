@@ -3,7 +3,7 @@ use discodo_launcher::catalog::load_catalog;
 #[test]
 fn bundled_catalog_has_thirty_games() {
     let games = load_catalog();
-    assert_eq!(games.len(), 30);
+    assert_eq!(games.len(), 50);
 }
 
 #[test]

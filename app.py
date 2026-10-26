@@ -57,7 +57,14 @@ class App(tk.Tk):
   card=tk.Frame(main,bg=PANEL,padx=16,pady=16); card.pack(fill="x",pady=(22,16)); self.cover=tk.Label(card,text="DISCODO",width=20,height=12,bg=PANEL3,fg=MUTED,font=("Segoe UI Semibold",11)); self.cover.pack(side="left",anchor="n",padx=(0,18)); d=tk.Frame(card,bg=PANEL); d.pack(side="left",fill="both",expand=True); tk.Label(d,text="GAME DETAILS",bg=PANEL,fg=MUTED,font=("Segoe UI Semibold",9)).pack(anchor="w"); self.desc=tk.Label(d,text="",bg=PANEL,fg=FG,font=("Segoe UI",11),justify="left",anchor="nw",wraplength=500); self.desc.pack(fill="x",anchor="w",pady=(12,18)); self.appid=tk.Label(d,text="",bg=PANEL,fg=MUTED,font=("Consolas",10)); self.appid.pack(anchor="w"); self.covernote=tk.Label(d,text="",bg=PANEL,fg=MUTED,font=("Segoe UI",9)); self.covernote.pack(anchor="w",pady=(8,0))
   tk.Label(main,text=self.t("path"),bg=BG,fg=MUTED,font=("Segoe UI Semibold",10)).pack(anchor="w",pady=(6,8)); row=tk.Frame(main,bg=BG); row.pack(fill="x"); self.pathvar=tk.StringVar(value=self.t("none")); tk.Entry(row,textvariable=self.pathvar,bg=PANEL2,fg=FG,relief="flat",state="readonly",readonlybackground=PANEL2).pack(side="left",fill="x",expand=True,ipady=9); ttk.Button(row,text=self.t("browse"),command=self.browse).pack(side="left",padx=(8,0))
   a=tk.Frame(main,bg=BG); a.pack(fill="x",pady=(14,0)); self.playbtn=ttk.Button(a,text=self.t("play"),style="Accent.TButton",command=self.play); self.playbtn.pack(side="left"); ttk.Button(a,text=self.t("steam"),command=self.open_steam).pack(side="left",padx=8); ttk.Button(a,text=self.t("favorite"),command=self.favorite).pack(side="left"); ttk.Button(a,text=self.t("folder"),command=self.open_folder).pack(side="left",padx=8); tk.Label(self,textvariable=self.status,bg=PANEL,fg=MUTED,anchor="w",padx=17,pady=10,font=("Segoe UI",9)).pack(fill="x",side="bottom")
- def change_lang(self,_=None):self.lang=LANGS.get(self.langbox.get(),"en"); self.settings["language"]=self.lang; self.save(); self.refresh()
+ def change_lang(self,_=None):
+  self.lang=LANGS.get(self.langbox.get(),"en")
+  self.settings["language"]=self.lang
+  self.save()
+  for child in self.winfo_children():child.destroy()
+  self.build()
+  self.refresh()
+  if self.selected:self.render(self.selected)
  def merge_popular(self):
   d={g.app_id:g for g in self.games}
   for aid,x in POPULAR_GAMES.items():d[aid]=type("GameEntry",(),{"app_id":aid,"name":x["name"],"popular":True,"genre":x["genre"],"description":x["description"]})()

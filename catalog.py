@@ -58,6 +58,20 @@ POPULAR_GAMES={
 "440900":{"name":"Conan Exiles","genre":"Survival","description":"Survive, build, and explore a brutal open world."},
 "1238810":{"name":"Battlefield V","genre":"FPS","description":"Large-scale World War II battles across multiple modes."},
 "1097150":{"name":"Fall Guys","genre":"Party","description":"Compete in chaotic obstacle-course party rounds."}}
+# Load the curated list from data when present; the embedded dictionary remains a safe fallback.
+try:
+    featured_file = Path(__file__).resolve().parent / "data" / "popular_games.json"
+    featured_rows = json.loads(featured_file.read_text(encoding="utf-8"))
+    for row in featured_rows:
+        app_id = str(row["appid"])
+        POPULAR_GAMES[app_id] = {
+            "name": str(row["name"]),
+            "genre": str(row.get("genre", "PC game")),
+            "description": str(row.get("description", "Featured PC game.")),
+        }
+except (OSError, ValueError, TypeError, KeyError):
+    pass
+
 class Catalog:
  def __init__(self,cache_path:Path):self.cache_path=cache_path
  def load_cached(self):

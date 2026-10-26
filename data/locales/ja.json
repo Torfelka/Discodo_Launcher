@@ -1,0 +1,15 @@
+{
+  "app_name": "Discodo_Launcher",
+  "library": "ライブラリ",
+  "search": "ゲームを検索…",
+  "choose_exe": "EXE を選択…",
+  "play": "プレイ",
+  "game_executable": "ゲーム実行ファイル",
+  "integrations": "連携機能",
+  "discord_presence": "Discord Rich Presence",
+  "steam_shortcuts": "Steam ショートカット",
+  "not_selected": "実行ファイル未選択",
+  "choose_executable_first": "先にゲーム本体の実行ファイルを選択してください。",
+  "launched": "ゲームを起動しました。",
+  "launch_failed": "起動に失敗しました。"
+}

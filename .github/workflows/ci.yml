@@ -1,0 +1,25 @@
+name: Rust CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    name: Check on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Install Linux GUI dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxkbcommon-dev libwayland-dev libx11-dev libxkbcommon-x11-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-xinerama0-dev libxcb-randr0-dev libxcb-render0-dev libxcb-shm0-dev libxcb-xfixes0-dev libxcb1-dev libgl1-mesa-dev
+      - run: cargo check --all-targets

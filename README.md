@@ -12,7 +12,7 @@ Open-source desktop game library and launcher written in Rust.
 - Launch real games with their working directory set correctly.
 - Optional Discord Rich Presence for your own Discord application.
 - Steam integration planned as a safe, opt-in shortcut exporter with backups.
-- Localization architecture (English and Russian included initially).
+- Translation data packs for 15 locales: English, Russian, German, French, Spanish, Italian, Chinese, Japanese, Korean, Brazilian Portuguese, Polish, Turkish, Kazakh, Czech, and Ukrainian. The current visible selector is wired for English/Russian; full runtime locale switching remains unfinished.
 - Portable JSON catalog and user settings.
 - MIT licensed.
 
@@ -50,7 +50,9 @@ To enable Rich Presence, configure your own Discord application's Client ID in S
 - [ ] Long-lived Discord Rich Presence connection
 - [ ] Steam shortcut export with automatic backup and validation
 - [ ] Cover art manager and local cache
-- [ ] More translations and accessibility options
+- [x] Translation JSON packs for 15 locales (runtime UI wiring still in progress)
+- [ ] Full runtime switching across all 15 locales
+- [ ] More accessibility options
 - [ ] CI build checks for Windows, Linux, and macOS
 
 ## License
